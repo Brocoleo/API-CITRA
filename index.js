@@ -9,7 +9,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(express.json());
-const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost', 'https://mi-campo.vercel.app'];
+const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'https://mi-campo.vercel.app'];
 const options = {
   origin: (origin, callback) => {
     if (whitelist.includes(origin) || !origin) {
