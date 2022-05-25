@@ -24,12 +24,12 @@ const ComponentSchema = {
     },
     valorMaximo: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         field: 'valor_maximo'
     },
     valorMinimo: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         field: 'valor_minimo'
     },
     nombreNave: {
