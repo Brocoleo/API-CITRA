@@ -43,6 +43,20 @@ router.get('/all',
     }
 });
 
+router.get('/promedio/:nombreSensor/:fecha',
+    async (req, res, next) => {
+    try {
+        const { nombreSensor, fecha } = req.params
+        const promedio = await service.promedioTemperatura(nombreSensor, fecha);
+
+        res.json(
+          promedio
+        );
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 
 module.exports = router;

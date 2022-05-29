@@ -22,15 +22,15 @@ const ComponentSchema = {
         unique: true,
         field: 'nombre_sensor'
     },
-    valorMaximo: {
+    valorMaximoTemp: {
         allowNull: false,
-        type: DataTypes.STRING,
-        field: 'valor_maximo'
+        type: DataTypes.INTEGER,
+        field: 'valor_maximo_Temp'
     },
     valorMinimo: {
         allowNull: false,
-        type: DataTypes.STRING,
-        field: 'valor_minimo'
+        type: DataTypes.INTEGER,
+        field: 'valor_minimo_Temp'
     },
     nombreNave: {
         allowNull: false,

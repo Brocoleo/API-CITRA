@@ -45,6 +45,20 @@ class HistorialService {
         return allHistorial;
     }
 
+    async promedioTemperatura(nombre_sensor, fecha){
+      const promedio = await sequelize.query(`SELECT '${nombre_sensor}', AVG(temperatura) as prom, fecha FROM historial where fecha='${fecha}' GROUP BY '${nombre_sensor}'`, { type: QueryTypes.SELECT } );
+      let total = 0;
+      for (const item of promedio){
+          total = (item.total);
+      }
+
+      return {
+        promedio,
+          total
+      };
+
+  }
+
 }
 
 module.exports = HistorialService;
