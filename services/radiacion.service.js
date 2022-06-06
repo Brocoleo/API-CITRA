@@ -28,7 +28,7 @@ class RadiacionService {
 
 
     async rangoMesHoras(mes, hora_inicio, hora_final){
-        const  rango = await sequelize.query(`select mes,hora_inicio,hora_final,radiacion from radiacion where radiacion.mes = ${mes} and radiacion.hora_final > '${hora_final}' and radiacion.hora_inicio < '${hora_inicio}'`, { type: QueryTypes.SELECT } );
+        const  rango = await sequelize.query(`select mes,hora_inicio,hora_final,radiacion from radiacion where radiacion.mes = ${mes} and (radiacion.hora_final >'${hora_final}' or radiacion.hora_final ='${hora_final}' ) and (radiacion.hora_inicio < '${hora_inicio}'or radiacion.hora_inicio = '${hora_inicio}')`, { type: QueryTypes.SELECT } );
         let total = 0;
         for (const item of rango){
             total = (item.total);
