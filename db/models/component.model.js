@@ -27,10 +27,20 @@ const ComponentSchema = {
         type: DataTypes.INTEGER,
         field: 'valor_maximo_Temp'
     },
-    valorMinimo: {
+    valorMinimoTemp: {
         allowNull: false,
         type: DataTypes.INTEGER,
         field: 'valor_minimo_Temp'
+    },
+    valorMaximoHumedad: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        field: 'valor_maximo_Humedad'
+    },
+    valorMinimoHumedad: {
+        allowNull: false,
+        type: DataTypes.INTEGER,
+        field: 'valor_minimo_Humedad'
     },
     nombreNave: {
         allowNull: false,
