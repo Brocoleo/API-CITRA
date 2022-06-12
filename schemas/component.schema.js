@@ -8,7 +8,7 @@ const valorMinimoTemp = Joi.number().integer();
 const valorMaximoHumedad = Joi.number().integer();
 const valorMinimoHumedad = Joi.number().integer();
 const nombreNave = Joi.string().min(3);
-const user_id = Joi.number();
+const userId = Joi.number();
 
 
 const createComponentSchema = Joi.object({
@@ -20,7 +20,7 @@ const createComponentSchema = Joi.object({
     valorMaximoHumedad: valorMaximoHumedad.required(),
     valorMinimoHumedad: valorMinimoHumedad.required(),
     nombreNave: nombreNave.required(),
-    user_id: user_id.required()
+    userId: userId.required()
 });
 
 const updateComponentSchema = Joi.object({
@@ -30,7 +30,7 @@ const updateComponentSchema = Joi.object({
     valorMinimoTemp,
     valorMaximoHumedad,
     valorMinimoHumedad,
-    user_id
+    userId
 });
 
 const getComponentSchema = Joi.object({
@@ -41,7 +41,7 @@ const getComponentSchema = Joi.object({
     valorMinimoTemp: valorMinimoTemp,
     valorMaximoHumedad: valorMaximoHumedad,
     valorMinimoHumedad: valorMinimoHumedad,
-    user_id: user_id
+    userId: userId
 
 
 });
