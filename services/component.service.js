@@ -14,12 +14,12 @@ class ComponentService {
 
     async unSensor(nombreSensor){
 
-        const componente = await sequelize.query(`select nombre_cultivo, nombre_sensor, valor_maximo_Temp, valor_minimo_Temp, valor_maximo_Humedad, valor_minimo_Humedad, nombre_nave from component where component.nombre_sensor = '${nombreSensor}'`, { type: QueryTypes.SELECT } );
+        const componente = await sequelize.query(`select nombre_cultivo, nombre_sensor, valor_maximo_Temp, valor_minimo_Temp, valor_maximo_Humedad, valor_minimo_Humedad from component where component.nombre_sensor = '${nombreSensor}'`, { type: QueryTypes.SELECT } );
         return componente;
     }
 
     async find(desde) {
-        const componentes = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, component.nombre_nave, users.email as responsable, user_id from component, users where component.user_id = users.id limit 5 offset ${desde}`, { type: QueryTypes.SELECT } );
+        const componentes = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, users.email as responsable, user_id from component, users where component.user_id = users.id limit 5 offset ${desde}`, { type: QueryTypes.SELECT } );
         const total = await models.Component.count();
         return {
             componentes,
@@ -83,12 +83,12 @@ class ComponentService {
         let nombreSensores;
         let allSensores;
         if(role !== 'ADMIN_ROLE') {
-            nombreSensores = await sequelize.query(`select nombre_sensor from component where user_id = ${idUsuario} and nombre_nave = '${nombreNave}'`, { type: QueryTypes.SELECT } );
-            allSensores = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (user_id = ${idUsuario}) AND (nombre_nave = '${nombreNave}') AND (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
+            nombreSensores = await sequelize.query(`select nombre_sensor from component where user_id = ${idUsuario} '`, { type: QueryTypes.SELECT } );
+            allSensores = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (user_id = ${idUsuario}) ') AND (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
         }
         else{
             nombreSensores = await sequelize.query(`select nombre_sensor from component where nombre_nave = '${nombreNave}'`, { type: QueryTypes.SELECT } );
-            allSensores = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (nombre_nave = '${nombreNave}') AND (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
+            allSensores = await sequelize.query(`select component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
         }
         const sensores = this.generarGraficas(allSensores);
 
@@ -145,11 +145,11 @@ class ComponentService {
 
         if(role !== 'ADMIN_ROLE'){
             sensores = await sequelize.query(`select nombre_sensor from component where user_id = ${idUsuario}`, { type: QueryTypes.SELECT } );
-            alertasUsuarios = await sequelize.query(`select component.nombre_nave, component.nombre_sensor, historial.fecha, component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (user_id = ${idUsuario}) AND (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
+            alertasUsuarios = await sequelize.query(`select  component.nombre_sensor, historial.fecha, component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (user_id = ${idUsuario}) AND (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
         }
         else{
             sensores = await sequelize.query(`select nombre_sensor from component`, { type: QueryTypes.SELECT } );
-            alertasUsuarios = await sequelize.query(`select component.nombre_nave, component.nombre_sensor, historial.fecha, component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
+            alertasUsuarios = await sequelize.query(`select  component.nombre_sensor, historial.fecha, component.nombre_cultivo, component.nombre_sensor, component.valor_maximo_Temp, component.valor_minimo_Temp, component.valor_maximo_Humedad, component.valor_minimo_Humedad, historial.peso_actual, historial.temperatura, historial.humedad from component, historial where (component.nombre_sensor = historial.nombre_sensor) order by historial.hora DESC, historial.fecha`, { type: QueryTypes.SELECT });
         }
         const notificaciones = this.generarGraficas(alertasUsuarios);
 
@@ -171,7 +171,6 @@ class ComponentService {
                         notificacionesUsuario.push({
                             nombre_cultivo: itemNotificacion.nombre_cultivo,
                             nombre_sensor: itemNotificacion.nombre_sensor,
-                            nombre_nave: itemNotificacion.nombre_nave,
                             valor_alerta: alerta
                         })
                     }

@@ -42,11 +42,6 @@ const ComponentSchema = {
         type: DataTypes.INTEGER,
         field: 'valor_minimo_Humedad'
     },
-    nombreNave: {
-        allowNull: false,
-        type: DataTypes.STRING,
-        field: 'nombre_nave'
-    },
     userId: {
         field: 'user_id',
         allowNull: false,

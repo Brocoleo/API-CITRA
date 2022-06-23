@@ -7,7 +7,6 @@ const valorMaximoTemp = Joi.number().integer();
 const valorMinimoTemp = Joi.number().integer();
 const valorMaximoHumedad = Joi.number().integer();
 const valorMinimoHumedad = Joi.number().integer();
-const nombreNave = Joi.string().min(3);
 const userId = Joi.number();
 
 
@@ -19,7 +18,6 @@ const createComponentSchema = Joi.object({
     valorMinimoTemp: valorMinimoTemp.required(),
     valorMaximoHumedad: valorMaximoHumedad.required(),
     valorMinimoHumedad: valorMinimoHumedad.required(),
-    nombreNave: nombreNave.required(),
     userId: userId.required()
 });
 
